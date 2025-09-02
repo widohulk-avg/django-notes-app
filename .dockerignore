@@ -1,0 +1,22 @@
+# Ignore database data
+data/
+*.dblwr
+*.ibd
+*.log
+*.pid
+*.sock
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment files
+.env
+*.env
+
+# Git
+.git/
+.gitignore
+
+# Docker itself
+.dockerignore
