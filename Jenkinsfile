@@ -1,32 +1,48 @@
 @Library('shared') _
 
 pipeline {
-    agent { label  'ubuntu-agent' }
+    agent { label 'ubuntu-agent' }
 
     stages {
-        stage("Hello Groovy") {
+        stage('Shared Function') {
             steps {
                 script {
-                    hello() // Assumes this function exists in your shared library under vars/hello.groovy
+                    echo 'Calling shared library function'
+                    hello() // This will call the function defined in vars/hello.groovy
                 }
             }
         }
 
-        stage("Hello First") {
+        stage('Code') {
             steps {
-                echo "hello from CI/CD pipeline"
+                echo 'Cloning the app repository'
+                git url: 'https://github.com/widohulk-avg/django-notes-app.git', branch: 'main'
+
+                echo 'Building Docker image'
+                sh 'docker build -t notes-app:latest .'
+                echo 'Docker build completed'
             }
         }
 
-        stage("Create Folder") {
+        stage('Test') {
             steps {
-                sh "mkdir -p hello-from-pipeline"
+                echo 'Running tests...'
+                // Add test commands here
             }
         }
 
-        stage("Bye from Pipeline") {
+        stage('Build') {
             steps {
-                echo "Bye dosto"
+                echo 'Building the application...'
+                // Add build steps here
+            }
+        }
+
+        stage('Deployment') {
+            steps {
+                echo 'Deploying the app...'
+                sh 'docker compose down'
+                sh 'docker compose up -d'
             }
         }
     }
