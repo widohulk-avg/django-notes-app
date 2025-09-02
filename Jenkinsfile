@@ -1,29 +1,33 @@
-@Library('Shared')_
-pipeline{
-    agent { label 'dev-server'}
-    
-    stages{
-        stage("Code clone"){
-            steps{
-                sh "whoami"
-            clone("https://github.com/LondheShubham153/django-notes-app.git","main")
+@Library('shared') _
+
+pipeline {
+    agent { label  'ubuntu-agent' }
+
+    stages {
+        stage("Hello Groovy") {
+            steps {
+                script {
+                    hello() // Assumes this function exists in your shared library under vars/hello.groovy
+                }
             }
         }
-        stage("Code Build"){
-            steps{
-            dockerbuild("notes-app","latest")
+
+        stage("Hello First") {
+            steps {
+                echo "hello from CI/CD pipeline"
             }
         }
-        stage("Push to DockerHub"){
-            steps{
-                dockerpush("dockerHubCreds","notes-app","latest")
+
+        stage("Create Folder") {
+            steps {
+                sh "mkdir -p hello-from-pipeline"
             }
         }
-        stage("Deploy"){
-            steps{
-                deploy()
+
+        stage("Bye from Pipeline") {
+            steps {
+                echo "Bye dosto"
             }
         }
-        
     }
 }
