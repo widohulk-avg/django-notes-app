@@ -7,6 +7,7 @@ pipeline {
         stage('Shared Function') {
             steps {
                 script {
+                    echo'ubuntu agent is down i am checking weather is will or not'
                     echo 'Calling shared library function'
                     hello() // This will call the function defined in vars/hello.groovy
                 }
