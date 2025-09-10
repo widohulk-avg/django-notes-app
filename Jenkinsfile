@@ -1,7 +1,8 @@
 @Library('shared') _
 
 pipeline {
-    agent { label 'ubuntu-agent' }
+    // agent { label 'ubuntu-agent' }
+    agent any
 
     stages {
         stage('Shared Function') {
